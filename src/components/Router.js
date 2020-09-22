@@ -3,10 +3,8 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 import Auth from '../routes/Auth';
 import Home from '../routes/Home';
 
-const AppRouter = () => {
+const AppRouter = ({isLoggedIn}) => {
   // eslint-disable-next-line
-  const [isLoggedIn, setisLoggedIn] = useState(false)
-
   return (
     <Router>
       <Switch>
