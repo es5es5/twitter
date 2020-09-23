@@ -1,5 +1,17 @@
-import React from 'react'
+import React, { Component } from 'react'
 
-const Auth = () => <span>Auth</span>
-
-export default Auth
+export default class Auth extends Component {
+  render() {
+    return (
+      <div>
+        <form>
+          <input type="text" placeholder="E-mail" required />
+          <input type="password" placeholder="Password" required />
+        </form>
+        <div>
+          <button type="submit">GOOGLE</button>
+        </div>
+      </div>
+    )
+  }
+}
