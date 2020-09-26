@@ -5,7 +5,7 @@ export default class Auth extends Component {
   state = {
     email: '',
     password: '',
-    newAccount: true
+    newAccount: false
   }
   onChange = (event) => {
     const { name, value } = event.target
