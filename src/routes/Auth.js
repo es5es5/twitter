@@ -5,7 +5,8 @@ export default class Auth extends Component {
   state = {
     email: '',
     password: '',
-    newAccount: false
+    newAccount: true,
+    error: ''
   }
   onChange = (event) => {
     const { name, value } = event.target
@@ -44,7 +45,7 @@ export default class Auth extends Component {
       }
       console.log(data)
     } catch (error) {
-      console.error(error)
+      this.setState({ error: error.message  })
     }
   }
   render() {
@@ -55,6 +56,7 @@ export default class Auth extends Component {
           <input type="password" name="password" placeholder="Password" value={this.state.password} required onChange={this.onChange} />
           <button type="submit">{ this.state.newAccount ? 'Create Account' : 'Log In' }</button>
         </form>
+        <p>{ this.state.error }</p>
         <div>
           <button type="submit">GOOGLE</button>
         </div>
