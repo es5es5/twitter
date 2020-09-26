@@ -1,9 +1,11 @@
+import { authService } from 'fbase'
 import React, { Component } from 'react'
 
 export default class Auth extends Component {
   state = {
     email: '',
-    password: ''
+    password: '',
+    newAccount: true
   }
   onChange = (event) => {
     const { name, value } = event.target
@@ -16,22 +18,42 @@ export default class Auth extends Component {
         break
       case 'password':
         this.setState({
-          email: value
+          password: value
         })
         break
       default:
         break
     }
   }
-  onSubmit = (event) => {
-    console.log(event.target.value)
+  onSubmit = async (event) => {
+    event.preventDefault()
+    let data = null
+    try {
+      if (this.state.newAccount) {
+        data =
+        await authService.createUserWithEmailAndPassword(
+          this.state.email,
+          this.state.password
+        )
+      } else {
+        data =
+        await authService.signInWithEmailAndPassword(
+          this.state.email,
+          this.state.password
+        )
+      }
+      console.log(data)
+    } catch (error) {
+      console.error(error)
+    }
   }
   render() {
     return (
       <div>
-        <form>
-          <input type="text" name="email" placeholder="E-mail" value={this.state.email} required onChange={this.onChange} />
-          <input type="password" name="password" placeholder="Password" value={this.state.password} required />
+        <form onSubmit={this.onSubmit}>
+          <input type="email" name="email" placeholder="E-mail" value={this.state.email} required onChange={this.onChange} />
+          <input type="password" name="password" placeholder="Password" value={this.state.password} required onChange={this.onChange} />
+          <button type="submit">{ this.state.newAccount ? 'Create Account' : 'Log In' }</button>
         </form>
         <div>
           <button type="submit">GOOGLE</button>
