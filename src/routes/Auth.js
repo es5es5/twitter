@@ -1,4 +1,5 @@
-import { authService } from 'fbase'
+import { authService, firebaseInstance } from 'fbase'
+import { auth } from 'firebase'
 import React, { Component } from 'react'
 
 export default class Auth extends Component {
@@ -48,6 +49,22 @@ export default class Auth extends Component {
       this.setState({ error: error.message  })
     }
   }
+  onSocialClick = async (event) => {
+    const { name } = event.target
+    let provider = null
+    switch (name) {
+      case 'google':
+        provider = new firebaseInstance.auth.GoogleAuthProvider()
+        break
+      case 'github':
+        provider = new firebaseInstance.auth.GithubAuthProvider()
+        break
+      default:
+        break
+    }
+    const data = await authService.signInWithPopup(provider)
+    console.log(data)
+  }
   render() {
     return (
       <div>
@@ -58,7 +75,7 @@ export default class Auth extends Component {
         </form>
         <p>{ this.state.error }</p>
         <div>
-          <button type="submit">GOOGLE</button>
+          <button type="button" name="google" onClick={this.onSocialClick}>GOOGLE</button>
         </div>
       </div>
     )
