@@ -1,3 +1,15 @@
-import React from 'react'
+import { authService } from 'fbase'
+import React, { Component } from 'react'
+export default class Profile extends Component {
+  onLogOutClick = () => {
+    authService.signOut()
+  }
 
-export default () => <span>Profile</span>;
+  render() {
+    return (
+      <>
+        <button onClick={this.onLogOutClick}>Log Out</button>
+      </>
+    )
+  }
+}

@@ -1,5 +1,4 @@
 import { authService, firebaseInstance } from 'fbase'
-import { auth } from 'firebase'
 import React, { Component } from 'react'
 
 export default class Auth extends Component {
