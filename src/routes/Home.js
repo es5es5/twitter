@@ -1,3 +1,4 @@
+import { dbService } from 'fbase'
 import React, { Component } from 'react'
 
 export default class Home extends Component {
@@ -6,6 +7,13 @@ export default class Home extends Component {
   }
   onSubmit = (event) => {
     event.preventDefault()
+    dbService.collection('tweets').add({
+      tweet: this.state.tweet,
+      createtime: Date.now()
+    })
+    this.setState({
+      tweet: ''
+    })
   }
   onChange = (event) => {
     const { name, value } = event.target

@@ -1,6 +1,6 @@
 import * as firebase from 'firebase/app';
 import 'firebase/auth'
-import 'firebase/database'
+import 'firebase/firestore'
 
 console.log(process.env)
 const firebaseConfig = {
@@ -17,3 +17,4 @@ firebase.initializeApp(firebaseConfig);
 
 export const authService = firebase.auth()
 export const firebaseInstance = firebase
+export const dbService = firebase.firestore()
