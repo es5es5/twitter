@@ -1,5 +1,29 @@
-import React from 'react'
+import React, { Component } from 'react'
 
-const Home = () => <span>Home</span>;
+export default class Home extends Component {
+  state = {
+    tweet: ''
+  }
+  onSubmit = (event) => {
+    event.preventDefault()
+  }
+  onChange = (event) => {
+    const { name, value } = event.target
 
-export default Home
+    if (name === 'tweet') {
+      this.setState({
+        tweet: value
+      })
+    }
+  }
+  render() {
+    return (
+      <div>
+        <form onSubmit={this.onSubmit}>
+          <input type="text" name="tweet" value={this.state.tweet} placeholder="What's up !" onChange={this.onChange} />
+          <button type="submit">Tweet!</button>
+        </form>
+      </div>
+    )
+  }
+}
