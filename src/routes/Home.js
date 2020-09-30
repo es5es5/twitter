@@ -3,8 +3,22 @@ import React, { Component } from 'react'
 
 export default class Home extends Component {
   state = {
-    tweet: ''
+    tweet: '',
+    tweets: []
   }
+  componentDidMount () {
+    this.getTweets()
+  }
+
+  getTweets = async () => {
+    this.setState({
+      tweets: await dbService.collection('tweets').get()
+    })
+    console.log(this.state.tweets.forEach(item => {
+      console.log(item.data().tweet)
+    }))
+  }
+
   onSubmit = (event) => {
     event.preventDefault()
     dbService.collection('tweets').add({
