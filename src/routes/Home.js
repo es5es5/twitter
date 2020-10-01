@@ -1,3 +1,4 @@
+import Tweet from 'components/Tweet'
 import { dbService } from 'fbase'
 import React, { Component } from 'react'
 
@@ -47,11 +48,11 @@ export default class Home extends Component {
           <button type="submit">Tweet!</button>
         </form>
         <hr />
-        <ul>
+        <div>
           {this.state.tweets.map(tweet => (
-            <li>{tweet.text}</li>
+            <Tweet key={tweet.id} tweetObj={tweet} isOwner={tweet.writerId === this.props.userObj.uid} />
           ))}
-        </ul>
+        </div>
       </div>
     )
   }
