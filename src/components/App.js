@@ -6,10 +6,13 @@ function App()
 {
   const [init, setinit] = useState(false);
   const [isLoggedIn, setisLoggedIn] = useState(false)
+  const [userObj, setuserObj] = useState(null);
+
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
         setisLoggedIn(true)
+        setuserObj(user)
       } else {
         setisLoggedIn(false)
       }
@@ -17,7 +20,7 @@ function App()
     })
   }, []);
   return (
-    init ? <AppRouter isLoggedIn={isLoggedIn} /> : 'Initializing...'
+    init ? <AppRouter isLoggedIn={isLoggedIn} userObj={userObj} /> : 'Initializing...'
   );
 }
 

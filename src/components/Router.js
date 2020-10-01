@@ -5,7 +5,7 @@ import Home from '../routes/Home';
 import Profile from '../routes/Profile';
 import Navigation from 'components/Navigation';
 
-const AppRouter = ({isLoggedIn}) => {
+const AppRouter = ({isLoggedIn, userObj}) => {
   // eslint-disable-next-line
   return (
     <Router>
@@ -16,7 +16,7 @@ const AppRouter = ({isLoggedIn}) => {
         (
           <>
             <Route exact path="/">
-              <Home></Home>
+              <Home userObj={userObj}></Home>
             </Route>
             <Route exact path="/profile">
               <Profile />

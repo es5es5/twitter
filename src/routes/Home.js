@@ -7,23 +7,24 @@ export default class Home extends Component {
     tweets: []
   }
   componentDidMount () {
-    this.getTweets()
-  }
-
-  getTweets = async () => {
-    this.setState({
-      tweets: await dbService.collection('tweets').get()
+    dbService.collection('tweets').onSnapshot(snapshot => {
+      const tweetArray = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }))
+      this.setState({
+        tweets: tweetArray
+      })
+      console.log(tweetArray)
     })
-    console.log(this.state.tweets.forEach(item => {
-      console.log(item.data().tweet)
-    }))
   }
 
   onSubmit = (event) => {
     event.preventDefault()
     dbService.collection('tweets').add({
-      tweet: this.state.tweet,
-      createtime: Date.now()
+      text: this.state.tweet,
+      createtime: Date.now(),
+      writerId: this.props.userObj.uid
     })
     this.setState({
       tweet: ''
@@ -45,6 +46,12 @@ export default class Home extends Component {
           <input type="text" name="tweet" value={this.state.tweet} placeholder="What's up !" onChange={this.onChange} />
           <button type="submit">Tweet!</button>
         </form>
+        <hr />
+        <ul>
+          {this.state.tweets.map(tweet => (
+            <li>{tweet.text}</li>
+          ))}
+        </ul>
       </div>
     )
   }
