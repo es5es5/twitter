@@ -32,19 +32,38 @@ export default class Home extends Component {
     })
   }
   onChange = (event) => {
-    const { name, value } = event.target
+    const { name, value, files } = event.target
 
-    if (name === 'tweet') {
-      this.setState({
-        tweet: value
-      })
+    switch (name) {
+      case 'tweet':
+        this.setState({
+          tweet: value
+        })
+        break
+      case 'file':
+        console.log(files)
+        this.getFilePreview(files)
+        break
+      default:
+        break
     }
   }
+
+  getFilePreview = (files) => {
+    const fileReader = new FileReader()
+    fileReader.onloadend = finish => {
+      console.log(finish.target.result)
+    }
+
+    fileReader.readAsDataURL(files[0])
+  }
+
   render() {
     return (
       <div>
         <form onSubmit={this.onSubmit}>
           <input type="text" name="tweet" value={this.state.tweet} placeholder="What's up !" onChange={this.onChange} />
+          <input type="file" name="file" accept="image/*" onChange={this.onChange} />
           <button type="submit">Tweet!</button>
         </form>
         <hr />
