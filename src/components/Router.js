@@ -9,7 +9,7 @@ const AppRouter = ({isLoggedIn, userObj}) => {
   // eslint-disable-next-line
   return (
     <Router>
-      {isLoggedIn && <Navigation />}
+      {isLoggedIn && <Navigation userObj={userObj} />}
       <Switch>
         {
         isLoggedIn ?
@@ -19,7 +19,7 @@ const AppRouter = ({isLoggedIn, userObj}) => {
               <Home userObj={userObj}></Home>
             </Route>
             <Route exact path="/profile">
-              <Profile />
+              <Profile userObj={userObj} />
             </Route>
           </>
         )

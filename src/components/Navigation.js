@@ -9,7 +9,7 @@ export default class Navigation extends Component {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/profile">Profile</Link>
+          <Link to="/profile">{this.props.userObj.displayName}'s Profile</Link>
         </li>
       </ul>
     )
