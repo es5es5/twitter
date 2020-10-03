@@ -1,11 +1,13 @@
 import Tweet from 'components/Tweet'
-import { dbService } from 'fbase'
+import { v4 as uuid } from 'uuid'
+import { dbService, storageService } from 'fbase'
 import React, { Component } from 'react'
 
 export default class Home extends Component {
   state = {
     tweet: '',
-    tweets: []
+    tweets: [],
+    attachment: null
   }
   componentDidMount () {
     dbService.collection('tweets').onSnapshot(snapshot => {
@@ -20,15 +22,29 @@ export default class Home extends Component {
     })
   }
 
-  onSubmit = (event) => {
+  onSubmit = async (event) => {
     event.preventDefault()
-    dbService.collection('tweets').add({
+    let attachmentUrl = null
+
+    if (this.state.attachment) {
+      const attachmentRef = storageService.ref().child(`${this.props.userObj.uid}/${uuid()}`)
+      const response = await attachmentRef.putString(this.state.attachment, 'data_url')
+      attachmentUrl = await response.ref.getDownloadURL()
+    }
+
+    const tweet = {
       text: this.state.tweet,
       createtime: Date.now(),
-      writerId: this.props.userObj.uid
-    })
+      writerId: this.props.userObj.uid,
+      attachmentUrl
+    }
+
+    await dbService.collection('tweets').add(tweet)
+
     this.setState({
-      tweet: ''
+      tweet: '',
+      attachment: null,
+      attachmentUrl: null
     })
   }
   onChange = (event) => {
@@ -41,8 +57,10 @@ export default class Home extends Component {
         })
         break
       case 'file':
-        console.log(files)
-        this.getFilePreview(files)
+        if (files) {
+          console.log(files)
+          this.getFilePreview(files)
+        }
         break
       default:
         break
@@ -52,7 +70,7 @@ export default class Home extends Component {
   getFilePreview = (files) => {
     const fileReader = new FileReader()
     fileReader.onloadend = finish => {
-      console.log(finish.target.result)
+      this.setState({ attachment: finish.target.result })
     }
 
     fileReader.readAsDataURL(files[0])
@@ -64,6 +82,9 @@ export default class Home extends Component {
         <form onSubmit={this.onSubmit}>
           <input type="text" name="tweet" value={this.state.tweet} placeholder="What's up !" onChange={this.onChange} />
           <input type="file" name="file" accept="image/*" onChange={this.onChange} />
+          {this.state.attachment &&
+          <img src={this.state.attachment} alt="tweet"  width="100px" height="100px" />
+          }
           <button type="submit">Tweet!</button>
         </form>
         <hr />

@@ -38,6 +38,7 @@ export default class Tweet extends Component {
         this.setState({
           newTweet: value
         })
+        break
       default:
         break
     }
@@ -59,6 +60,9 @@ export default class Tweet extends Component {
           :
           <>
           <h4>{this.props.tweetObj.text}</h4>
+          {this.props.tweetObj.attachmentUrl &&
+          <img src={this.props.tweetObj.attachmentUrl} alt="tweet"  width="100px" height="100px" />
+          }
           </>
         }
         {this.props.isOwner &&
