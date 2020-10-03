@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { dbService } from 'fbase'
+import { dbService, storageService } from 'fbase'
 
 export default class Tweet extends Component {
   state = {
@@ -18,6 +18,7 @@ export default class Tweet extends Component {
     const ok = window.confirm('Delete this Tweet?')
     if (ok) {
       await dbService.doc(`tweets/${this.props.tweetObj.id}`).delete()
+      await storageService.refFromURL(this.props.tweetObj.attachmentUrl).delete()
     }
   }
 
