@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { dbService, storageService } from 'fbase'
+import PropTypes from 'prop-types'
 
 export default class Tweet extends Component {
   state = {
@@ -74,4 +75,9 @@ export default class Tweet extends Component {
       </div>
     )
   }
+}
+
+Tweet.propType = {
+  tweetObj: PropTypes.object.isRequired,
+  isOwner: PropTypes.bool.isRequired
 }

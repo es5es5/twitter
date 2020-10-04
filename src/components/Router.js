@@ -6,7 +6,6 @@ import Profile from '../routes/Profile';
 import Navigation from 'components/Navigation';
 
 const AppRouter = ({isLoggedIn, userObj}) => {
-  // eslint-disable-next-line
   return (
     <Router>
       {isLoggedIn && <Navigation userObj={userObj} />}

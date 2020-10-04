@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 export default class Navigation extends Component {
   render() {
@@ -14,4 +15,8 @@ export default class Navigation extends Component {
       </ul>
     )
   }
+}
+
+Navigation.propTypes = {
+  userObj: PropTypes.object.isRequired
 }

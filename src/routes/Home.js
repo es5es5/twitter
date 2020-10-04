@@ -2,6 +2,7 @@ import Tweet from 'components/Tweet'
 import { dbService } from 'fbase'
 import React, { Component } from 'react'
 import TweetFactory from 'components/TweetFactory'
+import PropTypes from 'prop-types'
 
 export default class Home extends Component {
   state = {
@@ -35,4 +36,8 @@ export default class Home extends Component {
       </div>
     )
   }
+}
+
+Home.propTypes = {
+  userObj: PropTypes.object.isRequired
 }

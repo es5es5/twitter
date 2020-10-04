@@ -1,8 +1,13 @@
 import { dbService, storageService } from 'fbase'
 import { v4 as uuid } from 'uuid'
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
 
-export default class TweetFactory extends Component {
+export default class TweetFactory extends PureComponent {
+  static propTypes = {
+    userObj: PropTypes.object.isRequired
+  }
+
   state = {
     tweet: ''
   }
