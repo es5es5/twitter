@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { dbService, storageService } from 'fbase'
 
 export default class Tweet extends Component {
